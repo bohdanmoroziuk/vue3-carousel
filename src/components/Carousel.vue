@@ -20,6 +20,14 @@ const showPrevSlide = () => {
     currentSlideIndex.value -= 1;
   }
 };
+
+const checkIsActive = (slideIndex: number) => (
+  currentSlideIndex.value === slideIndex
+);
+
+const showSlide = (slideIndex: number) => {
+  currentSlideIndex.value = slideIndex;
+};
 </script>
 
 <template>
@@ -39,6 +47,16 @@ const showPrevSlide = () => {
       >
         <i class="fas fa-chevron-right"></i>
       </button>
+    </div>
+
+    <div class="carousel__pagination">
+      <button
+        class="carousel__point"
+        :class="{ 'carousel__point--active': checkIsActive(slideIndex) }"
+        v-for="(_, slideIndex) of numberOfSlides"
+        :key="slideIndex"
+        @click="showSlide(slideIndex)"
+      />
     </div>
   </div>
 </template>
@@ -78,5 +96,30 @@ const showPrevSlide = () => {
 .carousel__toggle:hover {
   background-color: black;
   color: white;
+}
+
+.carousel__pagination {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+}
+
+.carousel__point {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.carousel__point--active {
+  background-color: black;
 }
 </style>
