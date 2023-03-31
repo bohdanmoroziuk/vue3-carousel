@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { Carousel, CarouselSlide } from '@/components';
 
-const images = [
+const slides = [
   {
     name: 'image-1',
     src: require('@/assets/images/image-1.jpg'),
@@ -20,16 +20,21 @@ const images = [
 </script>
 
 <template>
-  <carousel>
+  <carousel #default="{ currentSlideIndex }">
     <carousel-slide
-      v-for="image of images"
-      :key="image.name"
+      v-for="(slide, slideIndex) of slides"
+      :key="slide.name"
     >
-      <img
-        class="image"
-        :src="image.src"
-        alt=""
-      />
+      <div
+        class="slide"
+        v-show="slideIndex === currentSlideIndex"
+      >
+        <img
+          class="slide__image"
+          :src="slide.src"
+          alt=""
+        />
+      </div>
     </carousel-slide>
   </carousel>
 </template>
@@ -43,9 +48,14 @@ const images = [
   padding: 0;
 }
 
-.image {
-  min-width: 100%;
+.slide {
+  width: 100%;
   height: 100%;
+}
+
+.slide__image {
+  width: 100%;
+  max-height: 100%;
   object-fit: cover;
 }
 </style>
