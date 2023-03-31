@@ -21,6 +21,7 @@ const slides = [
 
 <template>
   <carousel
+    pagination
     auto-play
     :timeout="3000"
     #default="{ currentSlideIndex }"

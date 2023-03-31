@@ -9,11 +9,15 @@ import {
 } from 'vue';
 
 interface Props {
+  navigation?: boolean;
+  pagination?: boolean;
   autoPlay?: boolean;
   timeout?: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  navigation: false,
+  pagination: false,
   autoPlay: false,
   timeout: 1000,
 });
@@ -74,7 +78,10 @@ onUnmounted(disableAutoPlay);
   <div class="carousel">
     <slot :current-slide-index="currentSlideIndex" />
 
-    <div class="carousel__navigation">
+    <div
+      class="carousel__navigation"
+      v-if="navigation"
+    >
       <button
         class="carousel__toggle carousel__toggle--backward"
         @click="showPrevSlide"
@@ -89,7 +96,10 @@ onUnmounted(disableAutoPlay);
       </button>
     </div>
 
-    <div class="carousel__pagination">
+    <div
+      class="carousel__pagination"
+      v-if="pagination"
+    >
       <button
         class="carousel__point"
         :class="{ 'carousel__point--active': checkIsActive(slideIndex) }"
