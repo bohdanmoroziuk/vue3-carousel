@@ -1,9 +1,32 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import {
+  ref,
+  withDefaults,
+  defineProps,
+  toRefs,
+  onMounted,
+  onUnmounted,
+} from 'vue';
+
+interface Props {
+  autoPlay?: boolean;
+  timeout?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  autoPlay: false,
+  timeout: 1000,
+});
+
+const { autoPlay, timeout } = toRefs(props);
+
+type Timer = ReturnType<typeof setInterval>;
 
 const currentSlideIndex = ref(0);
 
 const numberOfSlides = ref(3);
+
+const timer = ref<Timer>();
 
 const showNextSlide = () => {
   if (currentSlideIndex.value === numberOfSlides.value - 1) {
@@ -28,6 +51,23 @@ const checkIsActive = (slideIndex: number) => (
 const showSlide = (slideIndex: number) => {
   currentSlideIndex.value = slideIndex;
 };
+
+const enableAutoPlay = () => {
+  if (autoPlay.value) {
+    setInterval(showNextSlide, timeout.value);
+  }
+};
+
+const disableAutoPlay = () => {
+  if (timer.value) {
+    clearInterval(timer.value);
+    timer.value = undefined;
+  }
+};
+
+onMounted(enableAutoPlay);
+
+onUnmounted(disableAutoPlay);
 </script>
 
 <template>

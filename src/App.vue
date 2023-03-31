@@ -20,7 +20,11 @@ const slides = [
 </script>
 
 <template>
-  <carousel #default="{ currentSlideIndex }">
+  <carousel
+    auto-play
+    :timeout="3000"
+    #default="{ currentSlideIndex }"
+  >
     <carousel-slide
       v-for="(slide, slideIndex) of slides"
       :key="slide.name"
