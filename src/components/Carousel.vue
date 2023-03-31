@@ -1,4 +1,5 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <template>
   <div class="carousel">
@@ -7,5 +8,10 @@
 </template>
 
 <style scoped lang="scss">
+.carousel {
+  position: relative;
 
+  min-height: 100vh;
+  height: 100vh;
+}
 </style>
